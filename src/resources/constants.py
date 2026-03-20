@@ -8,6 +8,7 @@ from core.aggregated_normalized_measures import (
     test_coverage,
     team_throughput,
     ci_feedback_time,
+    run_time_measure,
 )
 
 AVAILABLE_PRE_CONFIGS = {
@@ -23,6 +24,10 @@ AVAILABLE_PRE_CONFIGS = {
         "functional_suitability": {
             "name": "Functional Suitability",
             "subcharacteristics": ["functional_completeness"],
+        },
+        "performance_efficiency": {
+            "name": "Performance Efficiency",
+            "subcharacteristics": ["time_behaviour", "resource_utilization"],
         },
     },
     "subcharacteristics": {
@@ -53,6 +58,16 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Functional Completeness",
             "measures": ["team_throughput"],
             "characteristics": ["functional_suitability"],
+        },
+        "time_behaviour": {
+            "name": "Time Behaviour",
+            "measures": ["response_time"],
+            "characteristics": ["performance_efficiency"],
+        },
+        "resource_utilization": {
+            "name": "Resource Utilization",
+            "measures": ["cpu_utilization", "memory_utilization"],
+            "characteristics": ["performance_efficiency"],
         },
     },
     "measures": {
@@ -104,6 +119,24 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["functional_suitability"],
             "metrics": ["total_issues", "resolved_issues"],
         },
+        "response_time": {
+            "name": "Response Time",
+            "subcharacteristics": ["time_behaviour"],
+            "characteristics": ["performance_efficiency"],
+            "metrics": ["endpoint_calls", "mean_response_time"],
+        },
+        "cpu_utilization": {
+            "name": "CPU Utilization",
+            "subcharacteristics": ["resource_utilization"],
+            "characteristics": ["performance_efficiency"],
+            "metrics": ["endpoint_calls", "cpu_usage"],
+        },
+        "memory_utilization": {
+            "name": "Memory Utilization",
+            "subcharacteristics": ["resource_utilization"],
+            "characteristics": ["performance_efficiency"],
+            "metrics": ["endpoint_calls", "cpu_usage"],
+        },
     },
 }
 
@@ -139,5 +172,17 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "ci_feedback_time": {
         "aggregated_normalized_measure": ci_feedback_time,
         "schema": schemas.CIFeedbackTimeSchema,
+    },
+    "response_time": {
+        "aggregated_normalized_measure": run_time_measure,
+        "schema": schemas.CompareRunTimeMeasureSchema,
+    },
+    "cpu_utilization": {
+        "aggregated_normalized_measure": run_time_measure,
+        "schema": schemas.CompareRunTimeMeasureSchema,
+    },
+    "memory_utilization": {
+        "aggregated_normalized_measure": run_time_measure,
+        "schema": schemas.CompareRunTimeMeasureSchema,
     },
 }

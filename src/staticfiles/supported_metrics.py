@@ -61,4 +61,28 @@ SUPPORTED_MEASURES = [
             ],
         }
     },
+    {
+        "response_time": {
+            "metrics": [
+                "endpoint_calls",
+                "mean_response_time",
+            ],
+        }
+    },
+    {
+        "cpu_utilization": {
+            "metrics": [
+                "endpoint_calls",
+                "cpu_usage",
+            ],
+        }
+    },
+    {
+        "memory_utilization": {
+            "metrics": [
+                "endpoint_calls",
+                "memory_usage",
+            ],
+        }
+    },
 ]

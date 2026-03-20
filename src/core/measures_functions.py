@@ -194,6 +194,12 @@ def get_team_throughput(data: dict[str, int]):
     total_issues = data["total_issues"]
     resolved_issues = data["resolved_issues"]
 
+    has_none = total_issues is None
+    has_zero = total_issues == 0
+
+    if has_none or has_zero:
+        return 0
+
     return 100 * (resolved_issues / total_issues)
 
 
@@ -207,5 +213,11 @@ def get_ci_feedback_time(data: dict[str, int]):
 
     total_builds = data["total_builds"]
     sum_ci_feedback_times = data["sum_ci_feedback_times"]
+
+    has_none = total_builds is None
+    has_zero = total_builds == 0
+
+    if has_none or has_zero:
+        return 0
 
     return sum_ci_feedback_times // total_builds

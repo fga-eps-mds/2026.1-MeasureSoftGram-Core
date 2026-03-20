@@ -4,7 +4,7 @@ DEFAULT_PRE_CONFIG = {
     "characteristics": [
         {
             "key": "reliability",
-            "weight": 34,
+            "weight": 25,
             "subcharacteristics": [
                 {
                     "key": "testing_status",
@@ -46,7 +46,7 @@ DEFAULT_PRE_CONFIG = {
         },
         {
             "key": "maintainability",
-            "weight": 33,
+            "weight": 25,
             "subcharacteristics": [
                 {
                     "key": "modifiability",
@@ -76,7 +76,7 @@ DEFAULT_PRE_CONFIG = {
         },
         {
             "key": "functional_suitability",
-            "weight": 33,
+            "weight": 25,
             "subcharacteristics": [
                 {
                     "key": "functional_completeness",
@@ -90,6 +90,42 @@ DEFAULT_PRE_CONFIG = {
                         },
                     ],
                 }
+            ],
+        },
+        {
+            "key": "performance_efficiency",
+            "weight": 25,
+            "subcharacteristics": [
+                {
+                    "key": "resource_utilization",
+                    "weight": 50,
+                    "measures": [
+                        {
+                            "key": "cpu_utilization",
+                            "weight": 50,
+                            "min_threshold": 0.0,
+                            "max_threshold": 0.33,
+                        },
+                        {
+                            "key": "memory_utilization",
+                            "weight": 50,
+                            "min_threshold": 0.0,
+                            "max_threshold": 0.33,
+                        },
+                    ],
+                },
+                {
+                    "key": "time_behaviour",
+                    "weight": 50,
+                    "measures": [
+                        {
+                            "key": "response_time",
+                            "weight": 100,
+                            "min_threshold": 0.0,
+                            "max_threshold": 0.66,
+                        },
+                    ],
+                },
             ],
         },
     ]

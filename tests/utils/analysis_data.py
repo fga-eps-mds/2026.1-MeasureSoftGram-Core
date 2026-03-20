@@ -118,6 +118,23 @@ EXTRACTED_MEASURES_DATA = {
             ],
         },
         {
+            "key": "ci_feedback_time",
+            "metrics": [
+                {
+                    "key": "total_builds",
+                    "value": [
+                        0.0,
+                    ],
+                },
+                {
+                    "key": "sum_ci_feedback_times",
+                    "value": [
+                        0.0,
+                    ],
+                },
+            ],
+        },
+        {
             "key": "non_complex_file_density",
             "metrics": [
                 {
@@ -232,6 +249,23 @@ EXTRACTED_MEASURES_DATA = {
                 }
             ],
         },
+        {
+            "key": "team_throughput",
+            "metrics": [
+                {
+                    "key": "total_issues",
+                    "value": [
+                        0.0,
+                    ],
+                },
+                {
+                    "key": "resolved_issues",
+                    "value": [
+                        0.0,
+                    ],
+                },
+            ],
+        },
     ]
 }
 
@@ -240,16 +274,142 @@ CALCULATE_MEASURES_RESULT_DATA = {
         {"key": "passed_tests", "value": 1.0},
         {"key": "test_builds", "value": 0.9995933399758454},
         {"key": "test_coverage", "value": 0.23425},
+        {"key": "ci_feedback_time", "value": 0.0},
         {"key": "non_complex_file_density", "value": 0.8603745807930887},
         {"key": "commented_file_density", "value": 0.0935},
         {"key": "duplication_absense", "value": 0.0},
+        {"key": "team_throughput", "value": 0.0},
+    ]
+}
+
+EXTRACTED_RUNTIME_MEASURES_DATA = {
+    "measures": [
+        {
+            "key": "cpu_utilization",
+            "releases": [
+                {
+                    "metrics": [
+                        10.1,
+                        14.1,
+                        16.1,
+                        13.1,
+                        20.1,
+                    ],
+                    "endpoint_calls": [
+                        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 9, 1, 2, 3, 1, 1, 4, 1, 1, 1],
+                        [2, 1, 8, 4, 3, 1, 2, 2, 1, 4, 2],
+                        [3, 1, 2, 1, 7, 1, 1, 3, 1, 3, 1],
+                        [10, 10, 10, 10, 10, 1, 1, 1, 1, 10, 1],
+                    ],
+                },
+                {
+                    "metrics": [
+                        10.0,
+                        14.0,
+                        16.0,
+                        13.0,
+                        20.0,
+                    ],
+                    "endpoint_calls": [
+                        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 9, 1, 2, 3, 1, 1, 4, 1, 1, 1],
+                        [2, 1, 8, 4, 3, 1, 2, 2, 1, 4, 2],
+                        [3, 1, 2, 1, 7, 1, 1, 3, 1, 3, 1],
+                        [10, 10, 10, 10, 10, 1, 1, 1, 1, 10, 1],
+                    ],
+                },
+            ],
+        },
+        {
+            "key": "memory_utilization",
+            "releases": [
+                {
+                    "metrics": [
+                        10.1,
+                        14.1,
+                        16.1,
+                        13.1,
+                        20.1,
+                    ],
+                    "endpoint_calls": [
+                        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 9, 1, 2, 3, 1, 1, 4, 1, 1, 1],
+                        [2, 1, 8, 4, 3, 1, 2, 2, 1, 4, 2],
+                        [3, 1, 2, 1, 7, 1, 1, 3, 1, 3, 1],
+                        [10, 10, 10, 10, 10, 1, 1, 1, 1, 10, 1],
+                    ],
+                },
+                {
+                    "metrics": [
+                        10.0,
+                        14.0,
+                        16.0,
+                        13.0,
+                        20.0,
+                    ],
+                    "endpoint_calls": [
+                        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 9, 1, 2, 3, 1, 1, 4, 1, 1, 1],
+                        [2, 1, 8, 4, 3, 1, 2, 2, 1, 4, 2],
+                        [3, 1, 2, 1, 7, 1, 1, 3, 1, 3, 1],
+                        [10, 10, 10, 10, 10, 1, 1, 1, 1, 10, 1],
+                    ],
+                },
+            ],
+        },
+        {
+            "key": "response_time",
+            "releases": [
+                {
+                    "metrics": [
+                        10.1,
+                        14.1,
+                        16.1,
+                        13.1,
+                        20.1,
+                    ],
+                    "endpoint_calls": [
+                        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 9, 1, 2, 3, 1, 1, 4, 1, 1, 1],
+                        [2, 1, 8, 4, 3, 1, 2, 2, 1, 4, 2],
+                        [3, 1, 2, 1, 7, 1, 1, 3, 1, 3, 1],
+                        [10, 10, 10, 10, 10, 1, 1, 1, 1, 10, 1],
+                    ],
+                },
+                {
+                    "metrics": [
+                        10.0,
+                        14.0,
+                        16.0,
+                        13.0,
+                        20.0,
+                    ],
+                    "endpoint_calls": [
+                        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 9, 1, 2, 3, 1, 1, 4, 1, 1, 1],
+                        [2, 1, 8, 4, 3, 1, 2, 2, 1, 4, 2],
+                        [3, 1, 2, 1, 7, 1, 1, 3, 1, 3, 1],
+                        [10, 10, 10, 10, 10, 1, 1, 1, 1, 10, 1],
+                    ],
+                },
+            ],
+        },
+    ]
+}
+
+CALCULATE_RUNTIME_MEASURES_RESULT_DATA = {
+    "measures": [
+        {"key": "cpu_utilization", "value": 0.66329966},
+        {"key": "memory_utilization", "value": 0.66329966},
+        {"key": "response_time", "value": 0.66329966},
     ]
 }
 
 CALCULATE_MEASURES_ERROR_INFOS = [
     (
         {"measures": None},
-        "error: Failed to validate input.\nschema_errors: {'measures': ['Field may not be null.']}",
+        "error: Extracted measures are not formatted correctly",
     ),
     (
         {
@@ -276,6 +436,35 @@ CALCULATE_MEASURES_ERROR_INFOS = [
             ]
         },
         "error: Metrics in passed_tests are not valid.",
+    ),
+    (
+        {
+            "measures": [
+                {
+                    "key": "response_time",
+                    "releases": [
+                        {"metrics": [1.0, 1.1], "endpoint_calls": [[5, 10]]},
+                        {"metrics": [1.0, 1.1], "endpoint_calls": [[5, 10]]},
+                    ],
+                }
+            ]
+        },
+        "error: Metrics in response_time are not valid.\nschema_errors: "
+        + "[\"'response_time': Metricas devem ter a mesma quantidade de registros\"]",
+    ),
+    (
+        {
+            "measures": [
+                {
+                    "key": "response_time",
+                    "releases": [
+                        {"metrics": [1.0, 1.1], "endpoint_calls": [[5, 10]]},
+                    ],
+                }
+            ]
+        },
+        "error: Metrics in response_time are not valid.\nschema_errors: "
+        + "[\"'response_time': Cada comparação de metricas de runtime deve possuir duas releases\"]",
     ),
 ]
 

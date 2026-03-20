@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "msgram_core"
-version = "1.4.5"
+version = "1.5.3"
 description = "The MeasureSoftGram-Core is a Software system for continuous quality of product observation and multidimensional use in continuous design engineering software and is where you have the innovative mathematical models for software analysis."
 readme = "README.md"
 authors = [
@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Utilities",
 ]
 keywords = ["core", "measures", "quality", "algebraic model"]
-requires-python = ">=3.8"
-dependencies = ["pandas==2.0.0","marshmallow==3.19.0","numpy==1.24.3"]
+requires-python = ">=3.9"
+dependencies = ["pandas>=2.2.0","marshmallow==3.21.0","numpy>=2.0","scikit-learn>=1.5.1","scipy>=1.14.1"]
 [tool.mypy]
 strict = true

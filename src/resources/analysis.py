@@ -1,15 +1,20 @@
+from enum import Enum
 import numpy as np
 from marshmallow.exceptions import ValidationError
+from marshmallow.utils import INCLUDE
 
 from core.schemas import (
     CalculateCharacteristicSchema,
     CalculateMeasureSchema,
+    CalculateRuntimeMeasureSchema,
     CalculateSubCharacteristicSchema,
     CalculateTSQMISchema,
 )
 from core.transformations import calculate_aggregated_weighted_value
 from resources.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
 from util.exceptions import MeasureKeyNotSupported
+
+MEASURE_TYPE = Enum("MEASURE_TYPE", ["STATIC", "RUN_TIME"])
 
 
 def convert_metrics_to_dict(metrics_list):
@@ -24,18 +29,22 @@ def convert_metrics_to_dict(metrics_list):
 
 
 def calculate_measures(
-    extracted_measures: CalculateMeasureSchema,
+    extracted_measures: CalculateMeasureSchema | CalculateRuntimeMeasureSchema,
     config: dict = {
         "characteristics": [{"subcharacteristics": [{"measures": [{"key": ""}]}]}]
     },
 ):
     # Validate if outter keys is valid
-    try:
+    if not CalculateMeasureSchema().validate(extracted_measures):
         data = CalculateMeasureSchema().load(extracted_measures)
-    except ValidationError as error:
-        raise ValidationError(
-            f"error: Failed to validate input.\nschema_errors: {error.messages}"
-        )
+        measure_type = MEASURE_TYPE.STATIC
+
+    elif not CalculateRuntimeMeasureSchema().validate(extracted_measures):
+        data = CalculateRuntimeMeasureSchema().load(extracted_measures)
+        measure_type = MEASURE_TYPE.RUN_TIME
+
+    else:
+        raise ValidationError("error: Extracted measures are not formatted correctly")
 
     # Objeto retornado em caso de sucesso
     result_data = {"measures": []}
@@ -49,15 +58,17 @@ def calculate_measures(
             raise MeasureKeyNotSupported(f"Measure {measure_key} is not supported")
 
         schema = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key]["schema"]
-        measure_metrics = measure["metrics"]
 
         try:
-            validated_params = schema().load({"metrics": measure_metrics})
+            validated_params = schema().load(data=measure, unknown=INCLUDE)
             # Se o schema da medida tem validações específicas para alguma métrica
             if hasattr(schema(), "validate_metrics") and callable(
                 getattr(schema(), "validate_metrics")
             ):
-                schema().validate_metrics(validated_params["metrics"])
+                if measure_type == MEASURE_TYPE.STATIC:
+                    schema().validate_metrics(validated_params["metrics"])
+                else:
+                    schema().validate_metrics(validated_params)
         except ValidationError as exc:
             raise ValidationError(
                 f"error: Metrics in {measure_key} are not valid.\nschema_errors: {exc.messages}"
@@ -82,10 +93,10 @@ def calculate_measures(
             and ("min_threshold" == key or "max_threshold" == key)
         }
 
-        validated_params_dict = convert_metrics_to_dict(validated_params["metrics"])
-        result = aggregated_normalized_measure(
-            validated_params_dict, **threshold_config
-        )
+        if measure_type == MEASURE_TYPE.STATIC:
+            validated_params = convert_metrics_to_dict(validated_params["metrics"])
+
+        result = aggregated_normalized_measure(validated_params, **threshold_config)
 
         result_data["measures"].append(
             {

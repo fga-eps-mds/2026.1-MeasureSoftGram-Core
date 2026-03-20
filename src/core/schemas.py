@@ -317,3 +317,108 @@ class TeamThroughputSchema(Schema):
                 raise ValidationError(
                     f"'{metric['key']}': Deveria ser um valor flutuante"
                 )
+
+
+class RunTimeMeasureSchema(Schema):
+    """
+    {
+        "metrics": [10.0, 9.0],
+        "endpoint_calls": [[10, 2], [5, 8]]
+    }
+    """
+
+    # 1 Validação: Se contém uma lista de métricas
+    metrics = fields.List(fields.Float(required=True))
+
+    # 2 Validação: Se contém uma lista de chamadas a endpoints
+    endpoint_calls = fields.List(fields.List(fields.Integer(required=True)))
+
+
+class CompareRunTimeMeasureSchema(Schema):
+    """
+    {
+        "key": "cpu_utilization",
+        "releases": [
+            {
+                "metrics": [10.0, 9.0],
+                "endpoint_calls": [[10, 2], [5, 8]]
+            },
+            {
+                "metrics": [10.0, 9.0],
+                "endpoint_calls": [[10, 2], [5, 8]]
+            },
+        ],
+    }
+    """
+
+    # 1 Validação: Se contém o nome da medida
+    key = fields.Str(required=True)
+
+    # 2 Validação: Se contém uma lista de releases
+    releases = fields.List(fields.Nested(RunTimeMeasureSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(measure):
+
+        # 3 Validação: Se há duas releases para comparação
+        if len(measure["releases"]) != 2:
+            raise ValidationError(
+                f"'{measure['key']}': Cada comparação de metricas de runtime deve possuir duas releases"
+            )
+
+        # 4 Validação: Se as listas possuem o mesmo tamanho
+        if len(measure["releases"][0]["metrics"]) != len(
+            measure["releases"][0]["endpoint_calls"]
+        ) or len(measure["releases"][1]["metrics"]) != len(
+            measure["releases"][1]["endpoint_calls"]
+        ):
+            raise ValidationError(
+                f"'{measure['key']}': Metricas devem ter a mesma quantidade de registros"
+            )
+
+        # 5 Validação: Se as métricas são do tipo flutuante
+        if not isinstance(measure["releases"][0]["metrics"][0], float):
+            raise ValidationError(
+                f"'{measure['key']}': Metricas deveriam ser valores flutuantes"
+            )
+
+        # 6 Validação: Se as chamadas aos endpoints são do tipo inteiro
+        if not isinstance(measure["releases"][0]["endpoint_calls"][0][0], int):
+            raise ValidationError(
+                f"'{measure['key']}':  Chamadas a endpoints deveriam ser valores inteiros"
+            )
+
+
+class CalculateRuntimeMeasureSchema(Schema):
+    """
+    {
+    "measures": [
+            {
+                "key": "cpu_utilization",
+                "releases": [
+                    {
+                        "metrics": [10.0, 9.0],
+                        "endpoint_calls": [[10, 2], [5, 8]]
+                    },
+                    {
+                        "metrics": [10.0, 9.0],
+                        "endpoint_calls": [[10, 2], [5, 8]]
+                    },
+                ],
+            },
+            {
+                "key": "memory_utilization",
+                "releases": [
+                    {
+                        "metrics": [10.0, 9.0],
+                        "endpoint_calls": [[10, 2], [5, 8]]
+                    },
+                    {
+                        "metrics": [10.0, 9.0],
+                        "endpoint_calls": [[10, 2], [5, 8]]
+                    },
+                ],
+    }
+    """
+
+    measures = fields.List(fields.Nested(CompareRunTimeMeasureSchema), required=True)

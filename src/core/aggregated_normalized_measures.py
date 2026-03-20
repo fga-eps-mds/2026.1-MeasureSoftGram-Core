@@ -1,8 +1,10 @@
 import numpy as np
+import pandas as pd
 
 import core.measures_functions as ems_functions
 import core.transformations as transformations
 from util.check import Checker
+from util.run_time_data_operations import RunTimeDataOperations
 
 
 def non_complex_files_density(
@@ -344,6 +346,72 @@ def ci_feedback_time(
         min_threshold=min_threshold,
         max_threshold=max_threshold,
         gain_interpretation=1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def run_time_measure(
+    data_frame,
+    min_threshold: float = 0,
+    max_threshold: float = 0.33,
+):
+    """
+    Calculates any run time measure.
+
+    This function calculates run time measures used to assess the performance
+    efficiency quality characteristic.
+
+    This function gets a dataframe with two releases data, each one with the
+    number of endpoint calls and the metric accessed when they were being called.
+
+    It uses Random Forest and Control Charts to compare the two releases, returning
+    the violation rate of the second release related to the first release.
+    """
+    runTimeDataOperations = RunTimeDataOperations()
+
+    release_1 = data_frame["releases"][0]
+    release_2 = data_frame["releases"][1]
+
+    release_1_metrics = pd.DataFrame(release_1["metrics"], columns=["metrics"])
+    release_1_endpoint_calls = pd.DataFrame(release_1["endpoint_calls"])
+
+    release_2_metrics = pd.DataFrame(release_2["metrics"], columns=["metrics"])
+    release_2_endpoint_calls = pd.DataFrame(release_2["endpoint_calls"])
+
+    runTimeDataOperations.remove_outliers(
+        release_1_metrics,
+        release_2_metrics,
+        release_1_endpoint_calls,
+        release_2_endpoint_calls,
+    )
+
+    random_forest = runTimeDataOperations.get_random_forest(
+        release_2_endpoint_calls.values.tolist(),
+        release_2_metrics["metrics"].values.tolist(),
+    )
+
+    release_1_calls_on_release_2 = random_forest.predict(
+        release_1_endpoint_calls.values.tolist()
+    )
+
+    release_2_metrics_normalized = pd.DataFrame(
+        release_1_calls_on_release_2, columns=["metrics"]
+    )
+
+    cliff_delta = runTimeDataOperations.calculate_cliff_delta(
+        release_1_metrics["metrics"], release_2_metrics_normalized["metrics"]
+    )
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=cliff_delta,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=-1,
     )
 
     aggregated_and_normalized_measure = transformations.calculate_measure(

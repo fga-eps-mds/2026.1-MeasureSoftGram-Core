@@ -12,12 +12,14 @@ from tests.utils.analysis_data import (
     CALCULATE_CHARACTERISTICS_RESULT_DATA,
     CALCULATE_MEASURES_ERROR_INFOS,
     CALCULATE_MEASURES_RESULT_DATA,
+    CALCULATE_RUNTIME_MEASURES_RESULT_DATA,
     CALCULATE_SUBCHARACTERISTICS_ERROR_INFOS,
     CALCULATE_SUBCHARACTERISTICS_RESULT_DATA,
     CALCULATE_TSQMI_ERROR_INFOS,
     CALCULATE_TSQMI_RESULT_DATA,
     EXTRACTED_CHARACTERISTICS_DATA,
     EXTRACTED_MEASURES_DATA,
+    EXTRACTED_RUNTIME_MEASURES_DATA,
     EXTRACTED_SUBCHARACTERISTICS_DATA,
     EXTRACTED_TSQMI_DATA,
 )
@@ -34,6 +36,21 @@ def test_calculate_measures_success():
         assert measure_result.get("key") == measure_expected.get("key")
         assert pytest.approx(measure_result.get("value")) == measure_expected.get(
             "value"
+        )
+
+
+def test_calculate_runtime_measures_success():
+    calculation_result = calculate_measures(
+        extracted_measures=EXTRACTED_RUNTIME_MEASURES_DATA
+    )
+    assert "measures" in calculation_result
+
+    measures_result = calculation_result.get("measures")
+    measures_expected = CALCULATE_RUNTIME_MEASURES_RESULT_DATA.get("measures")
+    for measure_result, measure_expected in zip(measures_result, measures_expected):
+        assert measure_result.get("key") == measure_expected.get("key")
+        assert measure_result.get("value") == pytest.approx(
+            measure_expected.get("value")
         )
 
 
