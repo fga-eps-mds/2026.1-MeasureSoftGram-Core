@@ -135,7 +135,7 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Memory Utilization",
             "subcharacteristics": ["resource_utilization"],
             "characteristics": ["performance_efficiency"],
-            "metrics": ["endpoint_calls", "cpu_usage"],
+            "metrics": ["endpoint_calls", "memory_usage"],
         },
     },
 }
