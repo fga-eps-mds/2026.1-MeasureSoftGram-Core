@@ -85,11 +85,12 @@ class RunTimeDataOperations:
     def calculate_cliff_delta(
         self, release_1_metrics: pd.DataFrame, release_2_metrics: pd.DataFrame
     ):
-        size = len(release_1_metrics)
+        size_1 = len(release_1_metrics)
+        size_2 = len(release_2_metrics)
         sum = 0
 
-        for index_base in range(len(release_1_metrics)):
-            for index_alvo in range(len(release_1_metrics)):
+        for index_base in range(size_1):
+            for index_alvo in range(size_2):
                 value = 0
 
                 if release_1_metrics[index_base] < release_2_metrics[index_alvo]:
@@ -100,4 +101,4 @@ class RunTimeDataOperations:
 
                 sum += value
 
-        return abs(sum / (size * size))
+        return abs(sum / (size_1 * size_2))

@@ -21,7 +21,9 @@ def test_cliff_delta_total_positive_separation_asymmetric_lengths(run_time_ops):
     # Cliff's delta correto = +1.0 (a funcao retorna abs(), entao 1.0).
     release_1 = [10, 20, 30, 40, 50]
     release_2 = [1, 2, 3]
-    assert run_time_ops.calculate_cliff_delta(release_1, release_2) == pytest.approx(1.0)
+    assert run_time_ops.calculate_cliff_delta(release_1, release_2) == pytest.approx(
+        1.0
+    )
 
 
 def test_cliff_delta_total_negative_separation_asymmetric_lengths(run_time_ops):
@@ -29,7 +31,9 @@ def test_cliff_delta_total_negative_separation_asymmetric_lengths(run_time_ops):
     # Cliff's delta correto = -1.0; com abs() vira 1.0.
     release_1 = [1, 2, 3]
     release_2 = [10, 20, 30, 40, 50]
-    assert run_time_ops.calculate_cliff_delta(release_1, release_2) == pytest.approx(1.0)
+    assert run_time_ops.calculate_cliff_delta(release_1, release_2) == pytest.approx(
+        1.0
+    )
 
 
 def test_cliff_delta_asymmetric_known_value(run_time_ops):
