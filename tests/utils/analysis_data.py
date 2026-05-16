@@ -400,9 +400,9 @@ EXTRACTED_RUNTIME_MEASURES_DATA = {
 
 CALCULATE_RUNTIME_MEASURES_RESULT_DATA = {
     "measures": [
-        {"key": "cpu_utilization", "value": 0.66329966},
-        {"key": "memory_utilization", "value": 0.66329966},
-        {"key": "response_time", "value": 0.66329966},
+        {"key": "cpu_utilization", "value": 0.8316498316498316},
+        {"key": "memory_utilization", "value": 0.8316498316498316},
+        {"key": "response_time", "value": 0.8316498316498316},
     ]
 }
 

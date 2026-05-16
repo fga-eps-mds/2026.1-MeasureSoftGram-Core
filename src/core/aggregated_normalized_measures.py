@@ -358,7 +358,7 @@ def ci_feedback_time(
 def run_time_measure(
     data_frame,
     min_threshold: float = 0,
-    max_threshold: float = 0.33,
+    max_threshold: float = 0.66,
 ):
     """
     Calculates any run time measure.
