@@ -345,7 +345,7 @@ def ci_feedback_time(
         x=ci_feedback_time_value,
         min_threshold=min_threshold,
         max_threshold=max_threshold,
-        gain_interpretation=1,
+        gain_interpretation=-1,
     )
 
     aggregated_and_normalized_measure = transformations.calculate_measure(
