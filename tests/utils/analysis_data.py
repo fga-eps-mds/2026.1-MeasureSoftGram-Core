@@ -274,7 +274,7 @@ CALCULATE_MEASURES_RESULT_DATA = {
         {"key": "passed_tests", "value": 1.0},
         {"key": "test_builds", "value": 0.9995933399758454},
         {"key": "test_coverage", "value": 0.23425},
-        {"key": "ci_feedback_time", "value": 1.0},
+        {"key": "ci_feedback_time", "value": 0.5},
         {"key": "non_complex_file_density", "value": 0.8603745807930887},
         {"key": "commented_file_density", "value": 0.0935},
         {"key": "duplication_absense", "value": 0.0},
