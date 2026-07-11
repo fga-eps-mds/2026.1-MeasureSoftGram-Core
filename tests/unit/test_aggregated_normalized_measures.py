@@ -87,3 +87,29 @@ def test_ci_feedback_time_fast_pipeline_yields_high_measure():
         f"CI rapido (60s/build) deveria render medida alta, mas obteve {result}. "
         "Provavel inversao de gain_interpretation em ci_feedback_time."
     )
+
+
+def test_ci_feedback_time_no_builds_yields_neutral_measure():
+    """
+    Regression test for issue #24.
+
+    Semantica: quando total_builds == 0 nao existe dado de feedback do
+    CI no periodo (time sem pipeline rodando). Nesse caso a medida nao
+    pode valer 1.0, pois isso premiaria a ausencia de CI como se fosse
+    o pipeline mais rapido possivel. Tambem nao deve valer 0.0 (punicao
+    maxima). O comportamento correto e retornar um score neutro (0.5).
+
+    Hoje (bug) get_ci_feedback_time retorna 0 para total_builds == 0, e
+    esse 0 satura a interpolacao em 0, resultando em 1 - 0 = 1.0.
+    """
+    data_frame = {
+        "total_builds": 0,
+        "sum_ci_feedback_times": 0,
+    }
+
+    result = ci_feedback_time(data_frame)
+
+    assert result == 0.5, (
+        f"Sem builds no periodo a medida deveria ser neutra (0.5), "
+        f"mas obteve {result}. Ausencia de CI nao pode render nota maxima."
+    )
