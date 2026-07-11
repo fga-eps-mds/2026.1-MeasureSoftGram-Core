@@ -20,10 +20,18 @@ The MeasureSoftGram-Core is a software system for continuous quality of product 
 
 - [How to use](https://fga-eps-mds.github.io/2026.1-MeasureSoftGram-DOC/docs/artifact/how_to_use)
 
-## How to run Core
+## How to use
+
+Core is a Python library (`msgram-core` on PyPI), consumed in-process by the
+Service and the CLI. There is no server to run: install it and import the
+analysis functions.
 
 ```bash
-docker compose up
+pip install msgram-core
+```
+
+```python
+from resources.analysis import calculate_measures
 ```
 
 ## How to run tests
